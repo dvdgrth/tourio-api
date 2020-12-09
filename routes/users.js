@@ -1,6 +1,7 @@
 const express = require("express");
 const DB = require("./../databaseInterface");
 const passport = require("./../auth");
+const bcrypt = require("bcrypt");
 
 const router = express.Router();
 
@@ -34,23 +35,20 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// Create User.
-router.post(
-  "/",
-  passport.authenticate("jwt", { session: false }),
-  async (req, res, next) => {
-    try {
-      const ret = await DB.createUser(
-        req.body.name,
-        req.body.email,
-        req.body.password
-      );
-      res.json(ret);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
+// // Create User.
+// router.post(
+//   "/",
+//   // passport.authenticate("jwt", { session: false }),
+//   async (req, res, next) => {
+//     try {
+//       const hash = bcrypt.hashSync(req.body.password, 10);
+//       const ret = await DB.createUser(req.body.name, req.body.email, hash);
+//       res.json(ret);
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
 
 // Delete User.
 router.delete(

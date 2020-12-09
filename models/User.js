@@ -7,9 +7,9 @@ const userSchema = new mongoose.Schema({
   revoked: { type: Boolean, default: false },
 });
 
-userSchema.post("save", () =>
-  console.log(`A new user was saved. (${this.username})`)
-);
+userSchema.post("save", function () {
+  console.log(`A new user was saved. (${this.username}, ${this.email})`);
+});
 
 userSchema.methods.validPassword = function (password) {
   return password === this.password;

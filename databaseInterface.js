@@ -17,10 +17,10 @@ async function initConnection() {
   }
 }
 
-async function createUser(name, email, password) {
+async function createUser(username, email, password) {
   // TODO: Test if user is already exists.
   const newUser = new User({
-    name,
+    username,
     email,
     password,
   });
@@ -45,10 +45,9 @@ async function createComment(tour, author, body) {
 
 async function getAllTours() {
   return await Tour.find({}).populate([
-    { path: "author", select: "name" },
-    { path: "comments.author", select: "name" },
-    { path: "ratings.author", select: "name" },
-    ,
+    { path: "author", select: "username" },
+    { path: "comments.author", select: "username" },
+    { path: "ratings.author", select: "username" },
   ]);
 }
 
@@ -57,17 +56,21 @@ async function getAllUsers() {
 }
 
 async function getTourById(id) {
-  return await Tour.findById(id);
+  return await Tour.findById(id).populate([
+    { path: "author", select: "username" },
+    { path: "comments.author", select: "username" },
+    { path: "ratings.author", select: "username" },
+  ]);
 }
 
 async function getUserById(id) {
-  return await User.findById(id, "name");
+  return await User.findById(id, "username");
 }
 
 async function searchTours(q) {
   let re = new RegExp(".*" + q + ".*", "i");
   return await Tour.find({
-    $or: [{ body: re }, { title: re }],
+    $or: [{ summary: re }, { title: re }, { links: re }],
   });
 }
 

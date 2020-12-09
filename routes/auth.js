@@ -3,6 +3,7 @@ const DB = require("./../databaseInterface");
 const passport = require("./../auth");
 const User = require("./../models/User");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const router = express.Router();
 
@@ -28,13 +29,24 @@ const setRefreshToken = function (req, res, next) {
   next();
 };
 
-router.post("/signup", (req, res) => {
-  new User({
-    username: req.body.username,
-    password: req.body.password,
-    email: req.body.email,
-  }).save();
-  res.json(req.body);
+router.post("/signup", async (req, res, next) => {
+  try {
+    const hash = bcrypt.hashSync(req.body.password, 10);
+    const ret = await DB.createUser(req.body.username, req.body.email, hash);
+    res.json(ret);
+  } catch (error) {
+    next(error);
+  }
+
+  // const hash = bcrypt.hashSync(req.body.password, 10);
+
+  // const newUser = await new User({
+  //   username: req.body.username,
+  //   password: hash,
+  //   email: req.body.email,
+  // }).save();
+
+  // res.json(newUser);
 });
 
 router.post(
