@@ -31,7 +31,8 @@ const setRefreshToken = function (req, res, next) {
 
 router.post("/signup", async (req, res, next) => {
   try {
-    const hash = bcrypt.hashSync(req.body.password, 10);
+    const hash = await bcrypt.hash(req.body.password, 10);
+    // const hash = bcrypt.hashSync(req.body.password, 10);
     const ret = await DB.createUser(req.body.username, req.body.email, hash);
     res.json(ret);
   } catch (error) {

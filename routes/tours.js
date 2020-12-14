@@ -85,4 +85,22 @@ router.delete(
   }
 );
 
+// Create rating.
+router.post(
+  "/ratings",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    try {
+      const ret = await DB.createRating(
+        req.body.tour,
+        req.body.author,
+        req.body.rating
+      );
+      res.json(ret);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 module.exports = router;

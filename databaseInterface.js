@@ -7,6 +7,7 @@ async function initConnection() {
     await mongoose.connect("mongodb://localhost/myDB", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
     });
     console.log("connected I guess");
     mongoose.connection.on("error", (error) => {
@@ -64,7 +65,7 @@ async function getTourById(id) {
 }
 
 async function getUserById(id) {
-  return await User.findById(id, "username");
+  return await User.findById(id, "username").lean();
 }
 
 async function searchTours(q) {
@@ -88,7 +89,24 @@ async function deleteUserById(id) {
 }
 
 async function getToursFromUser(id) {
-  return await Tour.find({ author: id });
+  return await Tour.find({ author: id }).lean();
+}
+
+async function createRating(tour, author, rating) {
+  // remove old rating from this author
+  let p = await Tour.findByIdAndUpdate(
+    tour,
+    { $pull: { ratings: { author: author } } },
+    { safe: true }
+    // function removeRating(err, obj) {
+    //   console.log(err);
+    //   console.log(obj);
+    // }
+  );
+  // add new rating
+  p.ratings.push({ value: rating, author: author });
+
+  return await p.save();
 }
 
 exports.initConnection = initConnection;
@@ -104,3 +122,4 @@ exports.searchUsers = searchUsers;
 exports.deleteTourById = deleteTourById;
 exports.deleteUserById = deleteUserById;
 exports.getToursFromUser = getToursFromUser;
+exports.createRating = createRating;

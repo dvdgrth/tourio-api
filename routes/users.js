@@ -5,10 +5,29 @@ const bcrypt = require("bcrypt");
 
 const router = express.Router();
 
+// // Get all tours from user by id.
+// router.get("/:id/tours", async (req, res, next) => {
+//   try {
+//     const ret = await DB.getToursFromUser(req.params.id);
+//     if (ret != null) {
+//       res.json(ret);
+//     } else {
+//       let error = new Error(`Id not found. (id = ${req.params.id})`);
+//       error.statusCode = 404;
+//       next(error);
+//     }
+//   } catch (error) {
+//     error.statusCode = 400;
+//     next(error);
+//   }
+// });
+
 // Get user by id.
 router.get("/:id", async (req, res, next) => {
   try {
-    const ret = await DB.getUserById(req.params.id);
+    let ret = await DB.getUserById(req.params.id);
+    const ret2 = await DB.getToursFromUser(req.params.id);
+    ret = Object.assign(ret, { links: ret2 });
     if (ret != null) {
       res.json(ret);
     } else {

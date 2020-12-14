@@ -25,7 +25,8 @@ let simpleLogger = (req, res, next) => {
 app.use(simpleLogger);
 app.use(express.static("public"));
 app.use(express.json());
-app.use(cors());
+
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
