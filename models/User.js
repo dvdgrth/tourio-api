@@ -13,10 +13,14 @@ userSchema.post("save", function () {
 });
 
 userSchema.methods.validPassword = async function (password) {
+  // console.log("INside psw");
+  // console.log(password);
+  // console.log(this.password);
   const match = await bcrypt.compare(password, this.password);
   // if(match) {
   //     //login
   // }
+  console.log("match= ", match);
   return match;
   // return password === this.password;
 };

@@ -42,7 +42,8 @@ router.post(
     try {
       const ret = await DB.createTour(
         req.body.title,
-        req.body.author,
+        // req.body.author,
+        req.user._id,
         req.body.summary,
         req.body.links
       );
@@ -61,7 +62,8 @@ router.post(
     try {
       const ret = await DB.createComment(
         req.body.tour,
-        req.body.author,
+        // req.body.author,
+        req.user._id,
         req.body.body
       );
       res.json(ret);
@@ -93,7 +95,8 @@ router.post(
     try {
       const ret = await DB.createRating(
         req.body.tour,
-        req.body.author,
+        // req.body.author,
+        req.user._id,
         req.body.rating
       );
       res.json(ret);

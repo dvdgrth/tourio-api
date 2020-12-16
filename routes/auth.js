@@ -11,16 +11,17 @@ const sendNewToken = function (req, res, next) {
   const token = jwt.sign(
     { sub: req.user._id, name: req.user.username },
     process.env.JWT_SECRET,
-    { expiresIn: 120 }
+    { expiresIn: 60 }
   );
-  res.send(token);
+  // res.send(token);
+  res.json({ token: token });
 };
 
 const setRefreshToken = function (req, res, next) {
   const refreshToken = jwt.sign(
     { sub: req.user._id, name: req.user.username },
     process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "100d" }
+    { expiresIn: "30d" }
   );
   req.user.refreshToken = res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
@@ -63,12 +64,12 @@ router.get(
   sendNewToken
 );
 
-router.get(
-  "/dashboard",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.send(`${req.user.username}, you made it to dashboard!`);
-  }
-);
+// router.get(
+//   "/dashboard",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     res.send(`${req.user.username}, you made it to dashboard!`);
+//   }
+// );
 
 module.exports = router;
