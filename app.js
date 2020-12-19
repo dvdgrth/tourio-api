@@ -9,7 +9,7 @@ const cors = require("cors");
 const passport = require("./auth");
 const cookieParser = require("cookie-parser");
 
-const PORT = process.env.port || 4000;
+const PORT = process.env.PORT || 4000;
 
 const app = express();
 
