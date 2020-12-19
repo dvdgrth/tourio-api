@@ -26,7 +26,7 @@ app.use(simpleLogger);
 app.use(express.static("public"));
 app.use(express.json());
 
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: `http://0.0.0.0:${PORT}`, credentials: true }));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
@@ -42,5 +42,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () =>
-  console.log(`Server listening at http://localhost:${PORT}`)
+  console.log(`Server listening at http://0.0.0.0:${PORT}`)
 );
