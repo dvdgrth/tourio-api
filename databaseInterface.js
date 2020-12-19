@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 const User = require("./models/User");
 const Tour = require("./models/Tour");
+const { use } = require("./routes/auth");
 
 async function initConnection() {
   try {
-    await mongoose.connect("mongodb://localhost/myDB", {
+    // await mongoose.connect("mongodb://localhost/myDB", {
+    await mongoose.connect(process.env.DB_ADDRESS, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
@@ -19,7 +21,14 @@ async function initConnection() {
 }
 
 async function createUser(username, email, password) {
-  // TODO: Test if user is already exists.
+  if (await User.findOne({ username: username })) {
+    // return { error: "username already exists." };
+    throw new Error("username already exists.");
+  }
+  if (await User.findOne({ email: email })) {
+    throw new Error("email is already registered.");
+    // return { error: "email is already registered." };
+  }
   const newUser = new User({
     username,
     email,

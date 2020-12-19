@@ -35,6 +35,7 @@ router.post("/signup", async (req, res, next) => {
     const hash = await bcrypt.hash(req.body.password, 10);
     // const hash = bcrypt.hashSync(req.body.password, 10);
     const ret = await DB.createUser(req.body.username, req.body.email, hash);
+    console.log(ret);
     res.json(ret);
   } catch (error) {
     next(error);
