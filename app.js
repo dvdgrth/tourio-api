@@ -27,7 +27,13 @@ app.use(express.static("public"));
 app.use(express.json());
 
 // app.use(cors({ origin: `http://0.0.0.0:${PORT}`, credentials: true }));
-app.use(cors({ credentials: true }));
+app.use(
+  cors({
+    origin:
+      "https://5fdf34663257a30007bc1491--brave-wozniak-3cfbc5.netlify.app",
+    credentials: true,
+  })
+);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
