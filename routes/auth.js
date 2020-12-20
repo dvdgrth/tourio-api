@@ -59,7 +59,7 @@ router.post(
   sendNewToken
 );
 
-router.get(
+router.post(
   "/refresh",
   passport.authenticate("refreshTokenStrategy", { session: false }),
   sendNewToken
