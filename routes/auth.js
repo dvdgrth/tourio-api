@@ -61,7 +61,7 @@ router.post(
 
 router.post(
   "/refresh",
-  passport.authenticate("refreshTokenStrategy", { session: false }),
+  // passport.authenticate("refreshTokenStrategy", { session: false }),
   sendNewToken
 );
 
