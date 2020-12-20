@@ -50,6 +50,7 @@ const cookieExtractor = function (req) {
   if (req && req.cookies) {
     token = req.cookies.refreshToken;
   }
+  console.log(token);
   return token;
 };
 
