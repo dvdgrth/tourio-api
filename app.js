@@ -29,7 +29,10 @@ app.use(express.json());
 // app.use(cors({ origin: `http://0.0.0.0:${PORT}`, credentials: true }));
 app.use(
   cors({
-    origin: /https:\/\/mylinkyourlink\.netlify\.app.*/,
+    origin: process.env.PORT
+      ? /https:\/\/mylinkyourlink\.netlify\.app.*/
+      : `http://localhost:3000`,
+
     credentials: true,
   })
 );

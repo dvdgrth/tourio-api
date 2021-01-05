@@ -6,11 +6,14 @@ const { use } = require("./routes/auth");
 async function initConnection() {
   try {
     // await mongoose.connect("mongodb://localhost/myDB", {
-    await mongoose.connect(process.env.DB_ADDRESS, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-    });
+    await mongoose.connect(
+      process.env.PORT ? process.env.DB_ADDRESS : "mongodb://localhost/myDB",
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+      }
+    );
     console.log("connected I guess");
     mongoose.connection.on("error", (error) => {
       console.log(error);
