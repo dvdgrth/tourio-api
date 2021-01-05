@@ -25,6 +25,8 @@ const setRefreshToken = function (req, res, next) {
   );
   req.user.refreshToken = res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
+    sameSite: "none",
+    secure: true,
     path: "/refresh",
   });
   next();
