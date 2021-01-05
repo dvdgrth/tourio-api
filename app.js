@@ -26,6 +26,8 @@ app.use(simpleLogger);
 app.use(express.static("public"));
 app.use(express.json());
 
+app.set("trust proxy", 1);
+
 // app.use(cors({ origin: `http://0.0.0.0:${PORT}`, credentials: true }));
 app.use(
   cors({
