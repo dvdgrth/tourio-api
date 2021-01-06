@@ -53,7 +53,12 @@ async function createTour(title, author, summary, links) {
 
 async function updateTour(id, title, author, summary, links) {
   let p = await Tour.findById(id);
-  if (p.author !== author) {
+  if (p.author === author) {
+    p.title = title;
+    p.summary = summary;
+    p.links = links;
+    return await p.save();
+  } else {
     throw new Error(
       "change requester is not the original author: " +
         p.author +
@@ -61,10 +66,6 @@ async function updateTour(id, title, author, summary, links) {
         author
     );
   }
-  p.title = title;
-  p.summary = summary;
-  p.links = links;
-  return await p.save();
 }
 
 async function createComment(tour, author, body) {
