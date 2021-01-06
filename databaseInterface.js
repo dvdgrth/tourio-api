@@ -61,9 +61,13 @@ async function updateTour(id, title, author, summary, links) {
   } else {
     throw new Error(
       "change requester is not the original author: " +
-        p.author +
+        p.author.toString() +
         " vs " +
-        author
+        author +
+        " " +
+        typeof p.author.toString() +
+        " " +
+        typeof author
     );
   }
 }
