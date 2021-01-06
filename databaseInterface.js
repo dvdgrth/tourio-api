@@ -54,7 +54,12 @@ async function createTour(title, author, summary, links) {
 async function updateTour(id, title, author, summary, links) {
   let p = await Tour.findById(id);
   if (p.author !== author) {
-    throw new Error("change requester is not the original author: " + p.author);
+    throw new Error(
+      "change requester is not the original author: " +
+        p.author +
+        " vs " +
+        author
+    );
   }
   p.title = title;
   p.summary = summary;
