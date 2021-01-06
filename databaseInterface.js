@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const User = require("./models/User");
 const Tour = require("./models/Tour");
 const { use } = require("./routes/auth");
+const { findByIdAndUpdate } = require("./models/User");
 
 async function initConnection() {
   try {
@@ -48,6 +49,17 @@ async function createTour(title, author, summary, links) {
     links,
   });
   return await newTour.save();
+}
+
+async function updateTour(id, title, author, summary, links) {
+  let p = await Tour.findById(id);
+  if (p.author._id !== author) {
+    throw new Error("change requester is not the original author");
+  }
+  p.title = title;
+  p.summary = summary;
+  p.links = links;
+  return await p.save();
 }
 
 async function createComment(tour, author, body) {
@@ -135,3 +147,4 @@ exports.deleteTourById = deleteTourById;
 exports.deleteUserById = deleteUserById;
 exports.getToursFromUser = getToursFromUser;
 exports.createRating = createRating;
+exports.updateTour = updateTour;

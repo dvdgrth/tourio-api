@@ -54,6 +54,27 @@ router.post(
   }
 );
 
+// Change Tour.
+router.put(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    try {
+      const ret = await DB.updateTour(
+        req.params.id,
+        req.body.title,
+        // req.body.author,
+        req.user._id,
+        req.body.summary,
+        req.body.links
+      );
+      res.json(ret);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 // Create comment.
 router.post(
   "/comments",
