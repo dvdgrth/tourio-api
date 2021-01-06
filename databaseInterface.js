@@ -53,7 +53,7 @@ async function createTour(title, author, summary, links) {
 
 async function updateTour(id, title, author, summary, links) {
   let p = await Tour.findById(id);
-  if (p.author === author) {
+  if (p.author.toString() === author) {
     p.title = title;
     p.summary = summary;
     p.links = links;
