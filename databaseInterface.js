@@ -53,7 +53,7 @@ async function createTour(title, author, summary, links) {
 
 async function updateTour(id, title, author, summary, links) {
   let p = await Tour.findById(id);
-  if (p.author.toString() === author) {
+  if (p.author.toString() === author.toString()) {
     p.title = title;
     p.summary = summary;
     p.links = links;
@@ -63,11 +63,11 @@ async function updateTour(id, title, author, summary, links) {
       "change requester is not the original author: " +
         p.author.toString() +
         " vs " +
-        author +
+        author.toString() +
         " " +
         typeof p.author.toString() +
         " " +
-        typeof author
+        typeof author.toString()
     );
   }
 }
