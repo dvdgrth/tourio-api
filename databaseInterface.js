@@ -114,7 +114,23 @@ async function searchUsers(q) {
   return await User.find({ $or: [{ name: re }, { email: re }] }, "name");
 }
 
-async function deleteTourById(id) {
+async function deleteTourById(id, author) {
+  let p = await Tour.findById(id);
+  if (p.author.toString() === author.toString()) {
+    return await p.deleteOne();
+  } else {
+    throw new Error(
+      "delete requester is not the original author: " +
+        p.author.toString() +
+        " vs " +
+        author.toString() +
+        " " +
+        typeof p.author.toString() +
+        " " +
+        typeof author.toString()
+    );
+  }
+
   return await Tour.findByIdAndDelete(id);
 }
 

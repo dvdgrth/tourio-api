@@ -100,7 +100,7 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   async (req, res, next) => {
     try {
-      const ret = await DB.deleteTourById(req.params.id);
+      const ret = await DB.deleteTourById(req.params.id, req.user._id);
       res.json(ret);
     } catch (error) {
       next(error);

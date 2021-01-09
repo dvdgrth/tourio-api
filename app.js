@@ -33,7 +33,8 @@ app.use(
   cors({
     origin: process.env.PORT
       ? /https:\/\/mylinkyourlink\.netlify\.app.*/
-      : `http://localhost:3000`,
+      : // : `http://localhost:3000`,
+        /http:\/\/localhost:3000.*/,
 
     credentials: true,
   })
