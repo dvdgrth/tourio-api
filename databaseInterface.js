@@ -139,7 +139,13 @@ async function deleteUserById(id) {
 }
 
 async function getToursFromUser(id) {
-  return await Tour.find({ author: id }).lean();
+  return await Tour.find({ author: id })
+    .populate([
+      { path: "author", select: "username" },
+      { path: "comments.author", select: "username" },
+      { path: "ratings.author", select: "username" },
+    ])
+    .lean();
 }
 
 async function createRating(tour, author, rating) {
