@@ -106,7 +106,7 @@ async function searchTours(q) {
   let re = new RegExp(".*" + q + ".*", "i");
   return await Tour.find({
     $or: [{ summary: re }, { title: re }, { links: re }],
-  });
+  }).populate([{ path: "author", select: "username" }]);
 }
 
 async function searchUsers(q) {
