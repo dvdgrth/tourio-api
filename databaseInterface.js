@@ -79,11 +79,13 @@ async function createComment(tour, author, body) {
 }
 
 async function getAllTours() {
-  return await Tour.find({}).populate([
-    { path: "author", select: "username" },
-    { path: "comments.author", select: "username" },
-    { path: "ratings.author", select: "username" },
-  ]);
+  return await Tour.find({})
+    .populate([
+      { path: "author", select: "username" },
+      { path: "comments.author", select: "username" },
+      { path: "ratings.author", select: "username" },
+    ])
+    .sort({ updatedAt: "desc" });
 }
 
 async function getAllUsers() {
@@ -106,7 +108,9 @@ async function searchTours(q) {
   let re = new RegExp(".*" + q + ".*", "i");
   return await Tour.find({
     $or: [{ summary: re }, { title: re }, { links: re }],
-  }).populate([{ path: "author", select: "username" }]);
+  })
+    .populate([{ path: "author", select: "username" }])
+    .sort({ updatedAt: "desc" });
 }
 
 async function searchUsers(q) {
