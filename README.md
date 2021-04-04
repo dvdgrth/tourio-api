@@ -1,6 +1,1 @@
-# tourio-api
-
-Todos:
-
-- Registration, Authentification
-- RESTish API
+live at: https://mylinkyourlink.netlify.app/
